@@ -3,7 +3,7 @@ import plac, sys, os
 from mdbrun import taxids, table, db,fasta, minfo
 
 SUB_COMMANDS = {'taxids': taxids.run, 'table': table.run, 'db': db.run,
-                'fasta' : fasta.run, 'marker': minfo.run
+                'fasta' : fasta.run, 'minfo': minfo.run
                }
 
 USAGE = f"""

@@ -63,7 +63,8 @@ def parse_nt_table(fname, taxids, marker_gene):
     header = ["accession", "title", "length", "taxid",
               "scientific_name", "common_name", "marker", "genomic_location", ]
 
-    print("\t".join(header))
+    # print("\t".join(header))
+    yield "\t".join(header)
 
     stream = csv.reader(open(fname), delimiter="\t")
 
@@ -93,7 +94,7 @@ def parse_nt_table(fname, taxids, marker_gene):
         if marker_gene == "ALL" or marker.upper() == marker_gene.upper():
             out = "\t".join(row)
             parsed = "\t".join([out, marker, genomic_location])
-            # print(parsed)
+            print(parsed)
             yield parsed
 
     return
@@ -106,16 +107,30 @@ def check_input_marker(marker, genes):
     return
 
 
-@plac.pos('table', "Tab-separated file with columns accession,title,length,taxid,scientific name,common name.")
-@plac.opt('taxid', help="Tab delimited file with species names and taxid")
-@plac.opt('marker', help="Marker gene. Must be present in the synonyms file")
-@plac.opt('synonyms', help="CSV file listing synonyms for marker genes. First name is the main identifier.")
-@plac.opt('outfasta', help="Output marker fasta file.")
-def run(table, taxid, marker="ALL", synonyms="synonyms.csv", outfasta="marker.fa"):
+def check_inputs(table, taxid, synonyms):
     # Check if taxid file is present
     if not taxid:
         print(f"Taxid file must be given.")
         sys.exit()
+    # Check if blast table file is present
+    if not table:
+        print(f""" Tab delimited file must be present.\n \
+Columns include accession,title,length,taxid,scientific name,common name.""")
+        sys.exit()
+    # check synonyms file
+    if not os.path.exists(synonyms):
+        print(f"Synonyms file is not found")
+        sys.exit()
+    return
+
+
+@plac.opt('fname', "Tab-separated file with columns accession,title,length,taxid,scientific name,common name.")
+@plac.opt('taxid', help="Tab delimited file with species names and taxid")
+@plac.opt('marker', help="Marker gene. Must be present in the synonyms file")
+@plac.opt('synonyms', help="CSV file listing synonyms for marker genes. First name is the main identifier.")
+def run(fname, taxid, marker="ALL", synonyms="synonyms.csv"):
+    # Check required input files.
+    check_inputs(fname, taxid, synonyms)
 
     # List of all marker genes
     genes = ["ALL"]
@@ -134,7 +149,7 @@ def run(table, taxid, marker="ALL", synonyms="synonyms.csv", outfasta="marker.fa
     # Check marker gene
     check_input_marker(marker, genes)
     taxids = read_taxids(taxid)
-    for result in parse_nt_table(table, taxids, marker):
+    for result in parse_nt_table(fname, taxids, marker):
         print(result)
 
 

@@ -23,12 +23,13 @@ def run(marker, taxalist, blastdb='nt', synonyms="synonyms.csv", outfasta="marke
     #
     taxa_fname = os.path.basename(taxalist)
     taxa_prefix, _ = os.path.splitext(taxa_fname)
-    taxa_file = ".".join([taxa_prefix, "_tids", "txt"])
+    taxa_file = ".".join([taxa_prefix + "_tids", "txt"])
     taxa_file = os.path.join(intermediate, taxa_file)
 
     ft = open(taxa_file, "w")
     for result in taxids.parse_names(taxalist, children=True):
         ft.write(f"{result}\n")
+    ft.close()
     #
     # Step2 : Extract sequence details from blast databases
     #
@@ -44,9 +45,11 @@ def run(marker, taxalist, blastdb='nt', synonyms="synonyms.csv", outfasta="marke
     #
     # Step 3: Extract taxa-specific and marker-specific table.
     #
-    marker_file = ".".join([taxa_prefix, "_marker_table", "txt"])
+    marker_file = ".".join([taxa_prefix + "_marker_table", "txt"])
+    marker_file = os.path.join(intermediate, marker_file)
     fm = open(marker_file, "w")
-    for result in minfo.parse_nt_table(blast_table, taxa_file, marker):
+    tids = minfo.read_taxids(taxa_file)
+    for result in minfo.parse_nt_table(blast_table, tids, marker):
         fm.write(f"{result}\n")
 
 
