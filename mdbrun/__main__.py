@@ -7,7 +7,6 @@ python -m dbrun
 
 from mdbrun.main import run
 
-
 def main():
     """
     A simple wrapper over the task_selector
