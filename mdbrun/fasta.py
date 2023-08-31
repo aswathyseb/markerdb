@@ -1,5 +1,5 @@
 import plac, os, sys, csv
-from mdbrun import table, taxids, marker
+from mdbrun import table, taxids, minfo
 
 
 def create_folder(d):
@@ -46,7 +46,7 @@ def run(marker, taxalist, blastdb='nt', synonyms="synonyms.csv", outfasta="marke
     #
     marker_file = ".".join([taxa_prefix, "_marker_table", "txt"])
     fm = open(marker_file, "w")
-    for result in marker.parse_nt_table(blast_table, taxa_file, marker):
+    for result in minfo.parse_nt_table(blast_table, taxa_file, marker):
         fm.write(f"{result}\n")
 
 

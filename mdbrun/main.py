@@ -1,9 +1,9 @@
 import plac, sys, os
 
-from mdbrun import taxids, table, db,fasta, marker
+from mdbrun import taxids, table, db,fasta, minfo
 
 SUB_COMMANDS = {'taxids': taxids.run, 'table': table.run, 'db': db.run,
-                'fasta' : fasta.run, 'marker': marker.run
+                'fasta' : fasta.run, 'marker': minfo.run
                }
 
 USAGE = f"""
@@ -11,7 +11,7 @@ USAGE = f"""
 
    markerdb table     : convert blast databases to table
    markerdb taxids    : extract taxids for the taxalist
-   markerdb marker    : create taxa-specific marker table
+   markerdb minfo     : extract taxa-specific marker details
    markerdb fasta     : create taxa-specific marker fasta
    markerdb db        : create sqlite3 database with marker details
 
