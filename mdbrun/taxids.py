@@ -10,8 +10,7 @@
 # the species and subspecies in the taxonomic lineage of the input names are printed.
 # 2. missing.txt - A file named 'missing.txt' will be created in the output if taxids  could not be obtained for any of the input names.
 
-import sys, plac
-import subprocess
+import subprocess, plac
 
 
 def get_taxid(fname):
@@ -94,17 +93,16 @@ def print_taxids(stored):
     Print taxids for each taxname.
     """
     for taxa, tid in stored.items():
-        print(f"{taxa}\t{tid}")
+        yield f"{taxa}\t{tid}"
 
 
-def parse_names(fname, children=False):
+def parse_names(fname, children=False, print_output=True):
     """
     Input file contains a list of scientific names.
     This code returns the taxid of the input name.
     If there are species or subspecies under the input in taxonomic lineage, it returns
     the taxids of those as well when --children is specified.
     """
-
     store = dict()
     missing = set()
 
@@ -124,6 +122,7 @@ def parse_names(fname, children=False):
         except:
             continue
 
+    out = ""
     # Print missing names to "missing.txt"
     if missing:
         write_missing(missing)
@@ -133,31 +132,31 @@ def parse_names(fname, children=False):
 
     # If children is not specified, print taxids for inputs and exit.
     if not children:
-        print_taxids(filtered)
-        sys.exit()
+        for line in print_taxids(filtered):
+            yield line
+        return
 
-    else:
-        # Get comma separated list of taxids.
-        tids = ",".join(list(filtered.values()))
+    # Get comma separated list of taxids.
+    tids = ",".join(list(filtered.values()))
 
-        # Get all species/subspecies under it.
-        taxa_list = get_lower_taxa(tids).strip()
+    # Get all species/subspecies under it.
+    taxa_list = get_lower_taxa(tids).strip()
 
-        # Write the species list
-        species = get_species(taxa_list)
+    # Write the species list
+    species = get_species(taxa_list)
 
-        # Print all species and subspecies if present else print taxid for the input name.
-        if species:
-            for s in species:
-                print("\t".join([s[0], s[1]]))
-        else:
-            print("f{res}")
+    # Print all species and subspecies if present else print taxid for the input name.
+    if species:
+        for s in species:
+            # print("\t".join([s[0], s[1]]))
+            yield "\t".join([s[0], s[1]])
 
 
 @plac.pos('taxalist', "file listing taxa names")
 @plac.flg('children', help="extract all species and sub-species under the taxa names")
 def run(taxalist, children=False):
-    parse_names(taxalist, children)
+    for result in parse_names(taxalist, children):
+        print(result)
 
 
 if __name__ == "__main__":

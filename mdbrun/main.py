@@ -1,15 +1,20 @@
 import plac, sys, os
 
-from mdbrun import taxids, table, db
+from mdbrun import taxids, table, db,fasta, marker
 
-SUB_COMMANDS = {'taxids': taxids.run, 'table': table.run, 'db': db.run}
+SUB_COMMANDS = {'taxids': taxids.run, 'table': table.run, 'db': db.run,
+                'fasta' : fasta.run, 'marker': marker.run
+               }
 
 USAGE = f"""
    markerdb: create a taxa-specific DNA marker database \n
 
-   markerdb taxids    : extract taxids for the taxalist
    markerdb table     : convert blast databases to table
-   markerdb db        : create an sqlite3 database
+   markerdb taxids    : extract taxids for the taxalist
+   markerdb marker    : create taxa-specific marker table
+   markerdb fasta     : create taxa-specific marker fasta
+   markerdb db        : create sqlite3 database with marker details
+
    Run each command for more help.
    """
 
@@ -38,8 +43,6 @@ def run():
 
     func = SUB_COMMANDS[cmd]
     plac.call(func)
-
-
 
 
 if __name__ == '__main__':

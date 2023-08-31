@@ -237,7 +237,7 @@ common_name,marker,genomic_location must be present.\nExiting""")
             sys.exit()
 
 
-@plac.pos('table', "tab-delimited input file")
+@plac.pos('table', "tab-delimited file with marker details")
 @plac.opt('dbname', help="SQL database name")
 @plac.opt('metadata', help="tab-delimited metadata file")
 def run(table, dbname='marker.db', metadata=None):
