@@ -19,7 +19,7 @@ The different steps involved are
 1. Creates a table with sequence attributes from blast databases.
 2. Extracts species taxids for all species under each taxa specified in a taxalist file.
 3. Parses the synonyms file and the sequence titles obtained in step1 to extract marker-specific details.
-4. Gets the fasta sequences for the marker accessions obtained in step3.
+4. Gets fasta sequences for the marker accessions obtained in step3.
 5. Creates sqlite3 database with marker sequence details.
 
 The entire process typically takes ~45 minutes using NCBI's `nt` database.
