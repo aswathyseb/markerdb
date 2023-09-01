@@ -1,5 +1,4 @@
 import csv, sys, re, plac, os
-import subprocess
 
 # This script parses tab delimited file produced by blastdbcmd command
 # and extracts taxa-specific marker sequence details.
@@ -36,9 +35,11 @@ def match_patterns(title, pattern_list, func=lambda x: x.lower()):
         # Apply extra function to pattern to
         # enhance/relax searches.
         pattern = func(pattern)
+        # print("PPP", pattern)
         match = re.search(pattern, title)
         if match:
             return match.group(0)
+
     return
 
 
@@ -46,6 +47,7 @@ def parse_title(title):
     pattern_func = lambda p: r'\b' + p.lower() + r'\b'
 
     title = title.lower()
+    # print(MARKERS)
 
     # Return the first matched marker and region
     marker = match_patterns(title, pattern_list=MARKERS, func=pattern_func)
@@ -54,11 +56,20 @@ def parse_title(title):
     return marker, region
 
 
-def parse_nt_table(fname, taxids, marker_gene):
+def parse_nt_table(fname, taxid, marker_gene, synonyms):
     """
     This file 'fname' is produced by blastdbcmd command and has the format
     accession\ttitle\tseq_length\ttaxid\tscientific_name\tcommon_name
     """
+
+    check_inputs(fname, taxid, synonyms)
+
+    genes = read_synonyms(synonyms)
+
+    # Check marker gene
+    check_input_marker(marker_gene, genes)
+
+    taxids = read_taxids(taxid)
 
     header = ["accession", "title", "length", "taxid",
               "scientific_name", "common_name", "marker", "genomic_location", ]
@@ -94,10 +105,8 @@ def parse_nt_table(fname, taxids, marker_gene):
         if marker_gene == "ALL" or marker.upper() == marker_gene.upper():
             out = "\t".join(row)
             parsed = "\t".join([out, marker, genomic_location])
-            print(parsed)
-            yield parsed
 
-    return
+            yield parsed
 
 
 def check_input_marker(marker, genes):
@@ -112,11 +121,13 @@ def check_inputs(table, taxid, synonyms):
     if not taxid:
         print(f"Taxid file must be given.")
         sys.exit()
+
     # Check if blast table file is present
     if not table:
         print(f""" Tab delimited file must be present.\n \
 Columns include accession,title,length,taxid,scientific name,common name.""")
         sys.exit()
+
     # check synonyms file
     if not os.path.exists(synonyms):
         print(f"Synonyms file is not found")
@@ -124,14 +135,7 @@ Columns include accession,title,length,taxid,scientific name,common name.""")
     return
 
 
-@plac.opt('fname', "Tab-separated file with columns accession,title,length,taxid,scientific name,common name.")
-@plac.opt('taxid', help="Tab delimited file with species names and taxid")
-@plac.opt('marker', help="Marker gene. Must be present in the synonyms file")
-@plac.opt('synonyms', help="CSV file listing synonyms for marker genes. First name is the main identifier.")
-def run(fname, taxid, marker="ALL", synonyms="synonyms.csv"):
-    # Check required input files.
-    check_inputs(fname, taxid, synonyms)
-
+def read_synonyms(synonyms):
     # List of all marker genes
     genes = ["ALL"]
 
@@ -146,10 +150,15 @@ def run(fname, taxid, marker="ALL", synonyms="synonyms.csv"):
         for n in vals:
             marker_map[n.lower()] = key
 
-    # Check marker gene
-    check_input_marker(marker, genes)
-    taxids = read_taxids(taxid)
-    for result in parse_nt_table(fname, taxids, marker):
+    return genes
+
+
+@plac.opt('fname', "Tab-separated file with columns accession,title,length,taxid,scientific name,common name.")
+@plac.opt('taxid', help="Tab delimited file with species names and taxid")
+@plac.opt('marker', help="Marker gene. Must be present in the synonyms file")
+@plac.opt('synonyms', help="CSV file listing synonyms for marker genes. First name is the main identifier.")
+def run(fname, taxid, marker="ALL", synonyms="synonyms.csv"):
+    for result in parse_nt_table(fname, taxid, marker, synonyms):
         print(result)
 
 

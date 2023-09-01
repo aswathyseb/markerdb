@@ -1,0 +1,9 @@
+12S,12SrRNA,rnr1 rRNA,rRNA small subunit,rrnS rRNA,s-rRNA,small subunit rRNA,small rRNA subunit RNA,small subunit ribosomal RNA
+16S,l-RNA,l-rRNA,large rRNA subunit RNA,large subunit rRNA,LSU rRNA,mtLSU rRNA,rnl rRNA,rnr2 rRNA,rRNA large subunit,rrnL rRNA,large subunit ribosomal RNA
+Cytb,cytb,cytochrome b,cyt b,cyto B
+COI,CO1,COX1,COXI,MT-CO1,CO 1,CO I,COX I,COX 1,MT CO1,cytochrome c oxidase I,cytochrome c oxidase 1,cytochrome oxidase I,cytochrome oxidase 1,Cytochrome c oxidase subunit I,Cytochrome c oxidase subunit 1,Cytochrome oxidase subunit I,Cytochrome oxidase subunit 1,cytochrome c oxidase I
+COII,CO2,COX2,COXII,MT-CO2,CO 2,CO II,COX II,COX 2,MT CO2,cytochrome c oxidase II,cytochrome c oxidase 2,cytochrome oxidase II,cytochrome oxidase 2,Cytochrome c oxidase subunit II,Cytochrome c oxidase subunit 2,Cytochrome oxidase subunit II,Cytochrome oxidase subunit 2,cytochrome c oxidase II
+COIII,CO3,COX3,COXIII,MT-CO3,CO 3,CO III,COX IIII,COX 3,MT CO3,cytochrome c oxidase III,cytochrome c oxidase 3,cytochrome oxidase III,cytochrome oxidase 3,Cytochrome c oxidase subunit III,Cytochrome c oxidase subunit 3,Cytochrome oxidase subunit III,Cytochrome oxidase subunit 3,cytochrome c oxidase III
+rbcL,ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit
+complete_genome,complete genome
+partial_genome,partial genome
