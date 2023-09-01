@@ -79,6 +79,7 @@ If the database is not in the system path, provide its absolute path, including 
 For example /export/refs/nt/nt.
 
 **Synonyms file**
+
 Additionally, a csv synonyms file with alternative names for the marker genes is also required. This file is provided in this repository.
 Users can also specify it from the commandline as
 
