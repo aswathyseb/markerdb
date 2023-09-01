@@ -26,7 +26,7 @@ The entire process typically takes ~45 minutes using NCBI's `nt` database.
 
 ### Quick start
 
-**How to install the script?**
+**How to install the tool?**
 
 Step1: Install script
 
