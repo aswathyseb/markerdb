@@ -24,7 +24,7 @@ The different steps involved in the process are
 4. Get fasta sequence for the marker accessions obtained in step3.
 5. Create sqlite3 database with marker sequence details.
 
-The entire process typically takes ~45 minutes using NCBI's nt database. 
+The entire process typically takes ~45 minutes using NCBI's `nt` database. 
 
 **How to install the script?**
 
