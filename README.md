@@ -18,7 +18,7 @@ The different steps involved are
 
 1. Creates a table with sequence attributes from blast databases.
 2. Extracts species taxids for all species under each taxa specified in a taxalist file.
-3. Parses sequence titles from the table obtained in step1 and synonyms file to extract marker-specific details.
+3. Parses the synonyms file and the sequence titles from the table obtained in step1 to extract marker-specific details.
 4. Gets fasta sequence for the marker accessions obtained in step3.
 5. Creates sqlite3 database with marker sequence details.
 
