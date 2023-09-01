@@ -16,11 +16,11 @@ alternative names for these markers. The TaxonKit tool is used to fetch taxonomy
 
 The different steps involved are
 
-1. Create a table with sequence details from blast databases.
-2. Extract species taxids for all species under each taxa specified in a taxalist file.
+1. Creates a table with sequence details from blast databases.
+2. Extracts species taxids for all species under each taxa specified in a taxalist file.
 3. Parses sequence titles from the table obtained in step1 and synonyms file to extract marker-specific details.
-4. Get fasta sequence for the marker accessions obtained in step3.
-5. Create sqlite3 database with marker sequence details.
+4. Gets fasta sequence for the marker accessions obtained in step3.
+5. Creates sqlite3 database with marker sequence details.
 
 The entire process typically takes ~45 minutes using NCBI's `nt` database.
 
@@ -44,16 +44,16 @@ for the additional requirements before using the Taxonkit for the first time.
 The command below uses NCBI's nucleotide blast databases (nt) to extract fish specific COI marker sequences.
 `nt` databases should be in the BLASTDB variable
 
-    markerdb create -m COI -t fish_taxa.txt -b nt
+    markerdb create -m COI -t taxa.txt -b nt
 
 To test the tool, use the blast databases included here.
 
-    markerdb create -m COI -t fish_taxa.txt -b blastdb/toy_nt 
+    markerdb create -m COI -t taxa.txt -b blastdb/demo 
 
 **Inputs**
 
 1. Marker name ( eg: COI)
-2. Taxa list (eg: fish_taxa.txt)
+2. Taxa list (eg: taxa.txt)
 3. NCBI's nucleotide blast databases (nt)
 
 **1.Marker Name:** Specify the marker gene for which the sequences must be obtained. The specified gene and its
@@ -78,7 +78,7 @@ system path, provide its absolute path, including the prefix. For example /expor
 Additionally, a csv synonyms file with alternative names for the marker genes is also required. This file is provided in
 this repository. Users can also specify it from the commandline as
 
-    markerdb create -m COI -t fish_taxa.txt -b blastdb/toy_nt -s synonyms.csv
+    markerdb create -m COI -t taxa.txt -b blastdb/demo -s synonyms.csv
 
 **Outputs**
 
@@ -121,7 +121,7 @@ A taxid map file would look like this
 
 The tool is also implemented as a Makefile workflow. To run the workflow use the command
 
-    make create_db MARKER=COI TAXA=fish_taxa.txt BLAST_DB=blastdb/toy_nt
+    make create_db MARKER=COI TAXA=taxa.txt BLAST_DB=blastdb/demo
 
 To get details on the usage of the Makefile, run the command `make`.
 
