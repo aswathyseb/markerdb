@@ -12,7 +12,7 @@ COII, COIII, 12S, 16S, Cytb, and rbcL. Users can add additional markers by editi
 ### How does it work?
 
 The tools utilize sequence titles from BLAST databases to identify marker sequences and uses a synonyms file to obtain
-alternative names for these markers. The TaxonKit tool is used to fetch species taxids.
+alternative names for these markers. The TaxonKit tool is used to fetch taxonomy details.
 
 The different steps involved are
 
