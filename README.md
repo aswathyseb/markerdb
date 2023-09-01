@@ -101,7 +101,7 @@ download `nt` blast databases use the command
 
 **Using custom blast databases**
 
-Users can also create custom blast databases for use in the workflow. The sequences must adhere to NCBI taxonomy. To create custom blast databases, use the `makeblastdb` command
+Users can also create custom blast databases for use in the workflow. The sequences must adhere to NCBI taxonomy. To create custom blast databases, use `makeblastdb` command
 from the BLAST suite. A taxid-map file connecting the sequence ids to the NCBI taxid must be provided with
 the `-taxid_map` option while creating the custom databases.
 
