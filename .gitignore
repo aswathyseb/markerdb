@@ -1,0 +1,7 @@
+.idea
+markedb.egg-info/*
+__pycache__/*
+mdbrun/__pycache__/*
+*.egg-info/*
+*.pyc
+~      
