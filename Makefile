@@ -6,7 +6,7 @@
 
 
 # List of taxa names
-TAXA ?= fish_taxa.txt
+TAXA ?= taxa.txt
 
 # Marker name
 MARKER ?= COI
@@ -21,7 +21,7 @@ METADATA ?=
 MISC ?= misc
 
 # Path to nt database including database prefix
-BLAST_DB ?= blastdb/toy_nt
+BLAST_DB ?= blastdb/demo
 
 # Base name of blast database
 BLAST_PREFIX = $(notdir $(basename ${BLAST_DB}))
@@ -61,11 +61,12 @@ usage::
 > @echo "#"
 > @echo "# make create_db MARKER=${MARKER} TAXA=${TAXA} BLAST_DB=${BLAST_DB}"
 > @echo "#"
-> @echo "# TAXA : Taxa name list"
 > @echo "# MARKER : Marker name eg: COI"
+> @echo "# TAXA : Taxa name list"
 > @echo "# BLAST_DB: Blast nt database eg:BLAST_DB=nt"
 > @echo "#"
-> @echo "# Note: If nt database is not in the path, provide path to nt database including prefix eg:BLAST_DB=/export/refs/nt/nt"
+> @echo "# Note: If nt database is not in the path, provide path to nt database including prefix."
+> @echo "# eg:BLAST_DB=/export/refs/nt/nt"
 > @echo "#"
 > @echo "# Additional variables"
 > @echo "#"
