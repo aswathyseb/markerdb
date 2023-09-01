@@ -14,7 +14,7 @@ COII, COIII, 12S, 16S, Cytb, and rbcL. Users can add additional markers by editi
 The tools utilize sequence titles from BLAST databases to identify marker sequences and uses a synonyms file to obtain
 alternative names for these markers.
 
-The different steps involved in the process are
+The different steps involved are
 
 1. Create a table with sequence details from blast databases.
 2. Extract species taxids for all species under each taxa specified in a taxalist file.
