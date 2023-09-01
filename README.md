@@ -9,7 +9,7 @@ be tailored to include various organisms, taxonomic groups, and specific marker 
 The tool employs sequence information from BLAST databases and NCBI's taxonomy to create the reference database. It is compatible with sequences conforming to NCBI's taxonomy standards and supports multiple markers such as COI,
 COII, COIII, 12S, 16S, Cytb, and rbcL. Users can add additional markers by editing the synonyms file.
 
-### Quick start
+### How does it work?
 
 The tools utilize sequence titles from BLAST databases to identify marker sequences and uses a synonyms file to obtain
 alternative names for these markers.
@@ -23,6 +23,8 @@ The different steps involved in the process are
 5. Create sqlite3 database with marker sequence details.
 
 The entire process typically takes ~45 minutes using NCBI's `nt` database.
+
+### Quick start
 
 **How to install the script?**
 
