@@ -31,7 +31,7 @@ Step1: Install script
 
     pip install markerdb --upgrade
 
-Step2 :Install additional requirements
+Step2: Install additional requirements
 
     conda install --file conda-requirements.txt
 
