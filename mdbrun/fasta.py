@@ -28,7 +28,7 @@ def check_inputs(marker, taxalist, blastdb, synonyms):
         sys.exit()
 
     # Check if blast table file is present
-    if not os.path.exists(blastdb + ".nhr"):
+    if not (os.path.exists(blastdb + ".nhr") or table.is_in_BLASTDB(blastdb)):
         print(f"Blast databases files are missing.It must be given")
         sys.exit()
 

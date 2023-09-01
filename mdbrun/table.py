@@ -10,11 +10,27 @@
 # 1.  A tab delimited file with accession, title,sequence_length,taxid,scientific_name,common_name
 
 
-import plac, os
+import plac, os, sys
 import subprocess
 
 
+def is_in_BLASTDB(var):
+    """
+    checks is a name/path is part of the BLASTDB  variable.
+    """
+    blastdb_paths = os.environ.get('BLASTDB', '').split(':')
+    for elm in blastdb_paths:
+        if var in elm or var in os.path.basename(elm):
+            return True
+    return False
+
+
 def create_table(blastdb, out=None):
+    # Check if blast table file is present
+    if not (os.path.exists(blastdb + ".nhr") or is_in_BLASTDB(blastdb)):
+        print(f"Blast databases files are missing.It must be given")
+        sys.exit()
+
     out_dir = os.path.dirname(out) if out else None
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
@@ -31,6 +47,8 @@ def create_table(blastdb, out=None):
             f.write(content)
     else:
         print(content)
+
+    return
 
 
 @plac.pos('blastdb', "path to blast databases including the prefix")
