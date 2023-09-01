@@ -6,8 +6,7 @@ reference library.
 This repository contains a tool for creating a DNA marker database suitable for metabarcoding studies. The database can
 be tailored to include various organisms, taxonomic groups, and specific marker sequences.
 
-The tool employs sequence information from BLAST databases and NCBI's taxonomy to create the reference database. The
-tool is compatible with sequences conforming to NCBI's taxonomy standards and supports multiple markers such as COI,
+The tool employs sequence information from BLAST databases and NCBI's taxonomy to create the reference database. It is compatible with sequences conforming to NCBI's taxonomy standards and supports multiple markers such as COI,
 COII, COIII, 12S, 16S, Cytb, and rbcL. Users can add additional markers by editing the synonyms file.
 
 ### Quick start
