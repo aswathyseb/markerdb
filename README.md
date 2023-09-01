@@ -10,8 +10,6 @@ The tool employs sequence information from BLAST databases and NCBI's taxonomy t
 tool is compatible with sequences conforming to NCBI's taxonomy standards and supports multiple markers such as COI,
 COII, COIII, 12S, 16S, Cytb, and rbcL. Users can add additional markers by editing the synonyms file.
 
-The workflow typically takes ~45 minutes using NCBI's nt database. The example here shows creating a fish-specific COI
-marker gene database.
 
 ### Quick start
 The tools utilize sequence titles from BLAST databases to identify marker sequences and uses a synonyms file to obtain 
@@ -26,6 +24,7 @@ The different steps involved in the process are
 4. Get fasta sequence for the marker accessions obtained in step3.
 5. Create sqlite3 database with marker sequence details.
 
+The entire process typically takes ~45 minutes using NCBI's nt database. 
 
 **How to install the script?**
 
