@@ -110,7 +110,7 @@ def parse_nt_table(fname, taxid, marker_gene, synonyms):
 
 
 def check_input_marker(marker, genes):
-    if marker not in genes:
+    if marker != "ALL" and marker not in genes:
         print("Synonyms are not found for the input gene.")
         sys.exit()
     return

@@ -38,7 +38,7 @@ def check_inputs(marker, taxalist, blastdb, synonyms):
         sys.exit()
 
     mlist = parse_synonyms(synonyms)
-    if marker.upper() not in mlist:
+    if marker != "ALL" and marker.upper() not in mlist:
         print(f"{marker} gene not found in synonyms file. It must be present")
         sys.exit()
     return
