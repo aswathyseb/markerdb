@@ -76,7 +76,7 @@ An example taxa list file is
 
 **3.Blast databases:** Indicate the BLAST database from which to extract marker sequences. 
 If the database is not in the system path, provide its absolute path, including the prefix.
-For example, BLAST_DB=/export/refs/nt/nt.
+For example /export/refs/nt/nt.
 
 Additionally, a csv synonyms file with alternative names for the marker genes is also required. This file is provided in this repository.
 Users can also specify it from the commandline as
