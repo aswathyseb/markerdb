@@ -6,7 +6,7 @@
 
 
 import sqlite3
-import csv, os, plac, sys
+import csv, os, plac, sys, uuid
 from itertools import *
 
 # LIMIT = 1000
@@ -243,7 +243,8 @@ common_name,marker,genomic_location must be present.\nExiting""")
 def run(table, dbname='marker.db', metadata=None):
     check_input(table)
     # Create tmpdir for sqlite if the default has no space.
-    TMPDIR = "./tmp"
+    TMPDIR = str(uuid.uuid4())
+    # TMPDIR = "./tmp"
     os.mkdir(TMPDIR)
     os.environ['SQLITE_TMPDIR'] = TMPDIR
     create_db(dbname)
