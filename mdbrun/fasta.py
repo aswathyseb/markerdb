@@ -24,12 +24,12 @@ def parse_synonyms(synonyms):
 def check_inputs(marker, taxalist, blastdb, synonyms):
     # Check if taxalist file is present
     if not (taxalist or os.path.exists(taxalist)):
-        print(f"Taxalist file is not found. It must be given")
+        print(f"Taxa list file is missing.")
         sys.exit()
 
     # Check if blast table file is present
     if not (os.path.exists(blastdb + ".nhr") or table.is_in_BLASTDB(blastdb)):
-        print(f"Blast databases files are missing.It must be given")
+        print(f"Blast databases files are missing.Specify the path to blast databases along with the prefix.")
         sys.exit()
 
     # check synonyms file
@@ -39,7 +39,7 @@ def check_inputs(marker, taxalist, blastdb, synonyms):
 
     mlist = parse_synonyms(synonyms)
     if marker != "ALL" and marker.upper() not in mlist:
-        print(f"{marker} gene not found in synonyms file. It must be present")
+        print(f"{marker} gene not found in synonyms file.")
         sys.exit()
     return
 
