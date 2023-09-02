@@ -244,7 +244,6 @@ def run(table, dbname='marker.db', metadata=None):
     check_input(table)
     # Create tmpdir for sqlite if the default has no space.
     TMPDIR = str(uuid.uuid4())
-    # TMPDIR = "./tmp"
     os.mkdir(TMPDIR)
     os.environ['SQLITE_TMPDIR'] = TMPDIR
     create_db(dbname)
