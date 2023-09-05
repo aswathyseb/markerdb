@@ -9,7 +9,7 @@ SUB_COMMANDS = {'taxids': taxids.run, 'table': table.run, 'db': db.run,
 USAGE = f"""
    markerdb: create a taxa-specific DNA marker database \n
 
-   markerdb create    : create a taxa-specific DNA marker database
+   markerdb create    : create taxa-specific DNA marker database and FASTA
    markerdb fasta     : create taxa-specific marker fasta
    markerdb db        : create sqlite3 database with marker details
    markerdb table     : convert blast databases to table
