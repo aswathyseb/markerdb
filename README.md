@@ -55,6 +55,7 @@ To test the tool, use the blast databases included here.
 1. Marker name ( eg: COI)
 2. Taxa list (eg: taxa.txt)
 3. NCBI's nucleotide blast databases (nt)
+4. Synonyms file (eg.synonyms.csv)
 
 **1.Marker Name:** Specify the marker gene for which the sequences must be obtained. The specified gene and its
 alternative names must be present in the synonyms file. To extract all markers listed in the synonyms file, use 'ALL'.
@@ -73,12 +74,11 @@ extracted. For instance, specifying 'Viridiplantae' will yield marker genes for 
 **3.Blast databases:** Indicate the BLAST database from which to extract marker sequences. If the database is not in the
 system path, provide its absolute path, including the prefix. For example /export/refs/nt/nt.
 
-**Synonyms file**
-
-The tool additionally requires a comma separated synonyms file with alternative names for the marker genes. This file is provided in
+**4. Synonyms file:** A comma separated file with alternative names for the marker genes. This file is provided in
 this repository. Users can edit the file to add additional markers and specify it from the commandline as
 
-    markerdb create -m COI -t taxa.txt -b blastdb/demo -s synonyms.csv
+The tool additionally requires a comma separated synonyms file with alternative names for the marker genes. This file is provided in
+this repository. Users can edit the file to add additional markers.
 
 **Outputs**
 
