@@ -23,9 +23,11 @@ def parse_synonyms(synonyms):
 
 def check_inputs(marker, taxalist, blastdb, synonyms):
     if marker == None:
+        print()
         print(f" Marker is required.")
         print(f" Required inputs are  marker, taxalist, blastdb, synonyms.")
         print(f" Use -h to see all options.")
+        print()
         sys.exit()
 
     mlist = parse_synonyms(synonyms)
@@ -35,9 +37,11 @@ def check_inputs(marker, taxalist, blastdb, synonyms):
 
     # Check if taxalist file is present
     if taxalist == None:
+        print()
         print(f" Taxa list is required.")
         print(f" Required inputs are  marker, taxalist, blastdb, synonyms.")
         print(f" Use -h to see all options.")
+        print()
         sys.exit()
 
     if not (taxalist or os.path.exists(taxalist)):
