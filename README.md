@@ -44,11 +44,11 @@ for the additional requirements before using the Taxonkit for the first time.
 The command below uses NCBI's nucleotide blast databases (nt) to extract fish specific COI marker sequences.
 `nt` databases should be in the BLASTDB variable.
 
-    markerdb create -m COI -t taxa.txt -b nt
+    markerdb create -m COI -t taxa.txt -b nt -s synonyms.csv
 
 To test the tool, use the blast databases included here.
 
-    markerdb create -m COI -t taxa.txt -b blastdb/demo 
+    markerdb create -m COI -t taxa.txt -b blastdb/demo -s synonyms.csv
 
 **Inputs**
 
@@ -75,10 +75,8 @@ extracted. For instance, specifying 'Viridiplantae' will yield marker genes for 
 system path, provide its absolute path, including the prefix. For example /export/refs/nt/nt.
 
 **4. Synonyms file:** A comma separated file with alternative names for the marker genes. This file is provided in
-this repository. Users can edit the file to add additional markers and specify it from the commandline as
-
-The tool additionally requires a comma separated synonyms file with alternative names for the marker genes. This file is provided in
 this repository. Users can edit the file to add additional markers.
+
 
 **Outputs**
 
