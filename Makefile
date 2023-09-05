@@ -39,7 +39,7 @@ DBNAME ?= marker.db
 MARKER_FASTA ?= marker.fa
 
 # Basename of the Taxa file
-PREFIX = $(basename ${TAXA})
+PREFIX = $(notdir $(basename ${TAXA}))
 
 # File with species taxids
 TAXIDS = ${MISC}/${PREFIX}_tids.txt
