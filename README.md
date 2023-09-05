@@ -119,7 +119,7 @@ A taxid map file would look like this
 
 The tool is also implemented as a Makefile workflow. To run the workflow use the command
 
-    make create_db MARKER=COI TAXA=taxa.txt BLAST_DB=blastdb/demo
+    make create_db MARKER=COI TAXA=taxa.txt BLAST_DB=blastdb/demo SYNONYMS=synomys.csv
 
 To get details on the usage of the Makefile, run the command `make`.
 

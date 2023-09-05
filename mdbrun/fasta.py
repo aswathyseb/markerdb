@@ -22,7 +22,22 @@ def parse_synonyms(synonyms):
 
 
 def check_inputs(marker, taxalist, blastdb, synonyms):
+    if marker == None:
+        print(f" Marker is required.")
+        print(f" Required inputs are  marker, taxalist, blastdb, synonyms.")
+        sys.exit()
+
+    mlist = parse_synonyms(synonyms)
+    if marker != "ALL" and (marker != None and marker.upper() not in mlist):
+        print(f"{marker} gene not found in synonyms file.")
+        sys.exit()
+
     # Check if taxalist file is present
+    if taxalist == None:
+        print(f" Taxa list is required.")
+        print(f" Required inputs are  marker, taxalist, blastdb, synonyms.")
+        sys.exit()
+
     if not (taxalist or os.path.exists(taxalist)):
         print(f"Taxa list file is missing.")
         sys.exit()
@@ -35,11 +50,6 @@ def check_inputs(marker, taxalist, blastdb, synonyms):
     # check synonyms file
     if not os.path.exists(synonyms):
         print(f"Synonyms file is not found")
-        sys.exit()
-
-    mlist = parse_synonyms(synonyms)
-    if marker != "ALL" and marker.upper() not in mlist:
-        print(f"{marker} gene not found in synonyms file.")
         sys.exit()
     return
 
