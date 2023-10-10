@@ -122,7 +122,7 @@ def run(marker, taxalist, blastdb='nt', synonyms="synonyms.csv", outfasta="marke
     blast_cmd = f"blastdbcmd -db {blastdb} -entry_batch {acc_file} > {outfasta}"
     subprocess.run(blast_cmd, shell=True)
 
-    return blast_table, taxa_file, marker_file, acc_file
+    return blast_table, taxa_file, marker_file, acc_file, outfasta
 
 
 if __name__ == "__main__":

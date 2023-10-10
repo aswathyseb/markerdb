@@ -1,22 +1,21 @@
 import plac, sys, os
 
-from mdbrun import taxids, table, db, fasta, details, create
+from mdbrun import taxids, table, db, fasta, details, create,extract
 
 SUB_COMMANDS = {'taxids': taxids.run, 'table': table.run, 'db': db.run,
-                'fasta': fasta.run, 'details': details.run, 'create': create.run
+                'fasta': fasta.run, 'details': details.run, 'create': create.run, 'extract': extract.run,
                 }
 
 USAGE = f"""
    markerdb: create a taxa-specific DNA marker database \n
 
-   markerdb create    : create taxa-specific DNA marker database and FASTA
-   markerdb fasta     : create taxa-specific marker fasta
+   markerdb create    : create sqlite3 database and marker specific fasta
+   markerdb extract   : extract taxa specific marker  fasta from sqlite3 database
    markerdb db        : create sqlite3 database with marker details
    markerdb table     : convert blast databases to table
    markerdb taxids    : extract taxids for the taxalist
-   markerdb details   : extract taxa-specific marker details
-   
 
+   
    Run each command for more help.
    """
 

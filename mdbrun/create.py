@@ -4,7 +4,7 @@
 # Outputs are marker.fa and marker.db
 
 import plac
-from mdbrun import fasta, db
+from mdbrun import fasta, db, extract, taxids
 
 
 @plac.opt('marker', help="Marker gene. Must be present in the synonyms file. 'ALL' for all markers.")
@@ -15,14 +15,27 @@ from mdbrun import fasta, db
 @plac.opt('dbname', help="SQL database name")
 @plac.opt('metadata', help="tab-delimited metadata file", abbrev='f')
 @plac.opt('intermediate', help="Folder with intermediate files.")
-def run(marker, taxalist, blastdb='nt', synonyms="synonyms.csv", outfasta="marker.fa", dbname="marker.db",
+def run(marker, taxalist, blastdb='nt', synonyms="synonyms.csv", outfasta=None, dbname="marker.db",
         metadata=None, intermediate="misc"):
-    # Create a fasta file of taxa-specific marker sequences.
-    blast_table, species_tids, marker_table, acc_list = fasta.run(marker, taxalist, blastdb, synonyms, outfasta,
-                                                                  intermediate)
+    # Create a master fasta file of ALL taxa-specific marker sequences.
+    master_fasta = 'marker.fa'
+    blast_table, species_tids, marker_table, acc_list, master_seqs = fasta.run('ALL', taxalist, blastdb, synonyms,
+                                                                               master_fasta,
+                                                                               intermediate)
 
     # Create sqlite3 database with marker sequence details.
-    db.run(marker_table, dbname, metadata)
+    db.run(marker_table, dbname, master_seqs, metadata)
 
-    if __name__ == "__main__":
-        run()
+    # Get species names
+    ft = open("species.txt", "w")
+    for result in taxids.parse_names(taxalist, children=True):
+        name, _ = result.split('\t')
+        ft.write(f"{name}\n")
+    ft.close()
+
+    # Extract taxa specific marker sequences for each species
+    extract.run(marker, "species.txt", dbname, out=outfasta)
+
+
+if __name__ == "__main__":
+    run()

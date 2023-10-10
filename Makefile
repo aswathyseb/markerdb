@@ -20,6 +20,15 @@ METADATA ?=
 # Directory to store intermediate files
 MISC ?= misc
 
+# Basename of the Taxa file
+PREFIX = $(basename ${TAXA})
+
+# File to store taxids
+TIDS ?= ${MISC}/${PREFIX}_tids.txt
+
+# File with species names
+SPECIES ?= species.txt
+
 # Path to nt database including database prefix
 BLAST_DB ?= blastdb/demo
 
@@ -37,6 +46,9 @@ DBNAME ?= marker.db
 
 # Marker fasta file.
 MARKER_FASTA ?= marker.fa
+
+# Marker_fasta file.
+MARKER_GENE_FASTA ?= ${MARKER}"_marker.fa"
 
 # Basename of the Taxa file
 PREFIX = $(notdir $(basename ${TAXA}))
@@ -84,6 +96,7 @@ check:
 > echo ${NT_TABLE}
 > echo ${BLAST_PREFIX}
 > echo ${METADATA}
+> echo ${SYNONYMS}
 
 # Create NT database table
 ${NT_TABLE}:
@@ -98,19 +111,24 @@ ${TAXIDS}:${TAXA}
 ${MARKER_TABLE}:${NT_TABLE} ${TAXIDS}
 > markerdb details -f ${NT_TABLE} -t ${TAXIDS} -m ${MARKER} -s ${SYNONYMS} >${MARKER_TABLE}
 
-# Create marker fasta
+# Create ALL marker fasta
 ${MARKER_FASTA}: ${MARKER_TABLE}
-> markerdb fasta -m ${MARKER} -t ${TAXA} -b ${BLAST_DB} -s ${SYNONYMS} -o ${MARKER_FASTA} -i ${MISC}
+> markerdb fasta -m 'ALL' -t ${TAXA} -b ${BLAST_DB} -s ${SYNONYMS} -o ${MARKER_FASTA} -i ${MISC}
 
 # Create marker sqlite3 database
 ifeq ($(METADATA),)
-CMD = markerdb db ${MARKER_TABLE} -d ${DBNAME}
+CMD = markerdb db ${MARKER_TABLE} -d ${DBNAME} -s ${MARKER_FASTA}
 else
-CMD =  markerdb db ${MARKER_TABLE} -d ${DBNAME} -m ${METADATA}
+CMD =  markerdb db ${MARKER_TABLE} -d ${DBNAME} -s ${MARKER_FASTA} -m ${METADATA}
 endif
 
-${DBNAME}: ${MARKER_TABLE}
+${DBNAME}: ${MARKER_TABLE} ${MARKER_FASTA}
 > ${CMD}
+
+# Extract specified marker sequences.
+${MARKER_GENE_FASTA}: ${DBNAME}
+> cat ${TIDS} | cut -f 1 >${SPECIES} 
+> make -f src/extract.mk all MARKER=${MARKER} TAXA=${SPECIES} DBNAME=${DBNAME} 
 
 nt_table:${NT_TABLE}
 > ls -l ${NT_TABLE}
@@ -124,12 +142,16 @@ marker_table:${MARKER_TABLE}
 marker_fasta:${MARKER_FASTA}
 > ls -l ${MARKER_FASTA}
 
-marker_db:${DBNAME}
+marker_db:${MARKER_FASTA} ${DBNAME}
 > ls -l ${DBNAME}
 
-create_db: ${DBNAME} ${MARKER_FASTA}
-> ls -l ${MARKER_FASTA}
+extract_seq:${MARKER_GENE_FASTA}
+>ls -l ${MARKER_GENE_FASTA}
+
+create_db: ${MARKER_FASTA} ${DBNAME} ${MARKER_GENE_FASTA}
+> ls -l ${MARKER_GENE_FASTA}
 > ls -l ${DBNAME}
+
 
 # Do all steps
 all: nt_table species_tids marker_table marker_fasta marker_db

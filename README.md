@@ -46,6 +46,13 @@ The command below uses NCBI's nucleotide blast databases (nt) to extract fish sp
 
     markerdb create -m COI -t taxa.txt -b nt -s synonyms.csv
 
+The above command will create a sqlite3 database with all the markers specified in the synonyms file and also extracts `COI` specific sequences \
+in a file named `COI_marker.fa`.
+
+Once the `sqlite3` database is created use the command below to extract any taxa and marker subsets.
+
+    markerdb extract -m 12S -t taxa.txt -d marker.db -o 12S_markers.fa
+
 To test the tool, use the blast databases included here.
 
     markerdb create -m COI -t taxa.txt -b blastdb/demo -s synonyms.csv
@@ -119,7 +126,7 @@ A taxid map file would look like this
 
 The tool is also implemented as a Makefile workflow. To run the workflow use the command
 
-    make create_db MARKER=COI TAXA=taxa.txt BLAST_DB=blastdb/demo SYNONYMS=synomys.csv
+    make create_db MARKER=COI TAXA=taxa.txt BLAST_DB=blastdb/demo SYNONYMS=synonyms.csv
 
 To get details on the usage of the Makefile, run the command `make`.
 

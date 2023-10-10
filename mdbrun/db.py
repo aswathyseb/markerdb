@@ -51,7 +51,7 @@ def create_db(dbname):
                     (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , scientific_name, common_name, region,status, FOREIGN KEY (scientific_name) REFERENCES organism(scientific_name))''')
 
     curs.execute('''CREATE TABLE sequence
-                    (accession PRIMARY KEY, accession_version, length, seq_marker,title, genomic_location, taxid, FOREIGN KEY (taxid) REFERENCES organism(taxid) )''')
+                    (accession PRIMARY KEY, accession_version, length, seq_marker,title, seq, genomic_location, taxid, FOREIGN KEY (taxid) REFERENCES organism(taxid) )''')
 
     # Save table within database (Save changes)
     conn.commit()
@@ -78,6 +78,24 @@ def parse_metadata_file(fname):
         data.append(d)
 
     return data
+
+
+def store_seq(fasta):
+    store = dict()
+    fh = open(fasta)
+    acc, seq = "", ""
+    for row in fh:
+        if row.startswith('>'):
+            if acc != "":
+                store[acc] = seq
+                seq = ""
+            acc = row.split(' ')[0]
+            acc = acc.split(".")[0]
+            acc = acc.replace(">", "")
+
+        else:
+            seq += row.strip()
+    return store
 
 
 def get_status(term):
@@ -157,7 +175,7 @@ def load_metadata(dbname, data):
     return
 
 
-def load_sequence(dbname, fname):
+def load_sequence(dbname, fname, fasta):
     conn = get_conn(dbname)
     curs = conn.cursor()
 
@@ -174,8 +192,9 @@ def load_sequence(dbname, fname):
         com_name = row.get('common_name')
         marker = row.get('marker')
         location = row.get('genomic_location')
+        seq = fasta.get(acc, "")
 
-        data = (acc, acc_version, slen, marker, title, location, taxid)
+        data = (acc, acc_version, slen, marker, title, seq, location, taxid)
 
         species_info = (taxid, sc_name, com_name)
 
@@ -196,7 +215,7 @@ def load_sequence(dbname, fname):
 
     # Create sequence table
     for item in seqs:
-        curs.execute('INSERT INTO sequence VALUES (?,?,?,?,?,?,?)', item)
+        curs.execute('INSERT INTO sequence VALUES (?,?,?,?,?,?,?,?)', item)
     conn.commit()
 
     # Indexing
@@ -239,8 +258,9 @@ common_name,marker,genomic_location must be present.\nExiting""")
 
 @plac.pos('table', "tab-delimited file with marker details")
 @plac.opt('dbname', help="SQL database name")
+@plac.opt('seqs', help="Fasta file with marker sequences")
 @plac.opt('metadata', help="tab-delimited metadata file")
-def run(table, dbname='marker.db', metadata=None):
+def run(table, dbname='marker.db', seqs='marker.fa', metadata=None):
     check_input(table)
     # Create tmpdir for sqlite if the default has no space.
     TMPDIR = str(uuid.uuid4())
@@ -252,7 +272,10 @@ def run(table, dbname='marker.db', metadata=None):
         data = parse_metadata_file(metadata)
         load_metadata(dbname=dbname, data=data)
 
-    load_sequence(dbname=dbname, fname=table)
+    seq_store = dict()
+    if seqs:
+        seq_store = store_seq(seqs)
+    load_sequence(dbname=dbname, fname=table, fasta=seq_store)
 
     # Remove temporary directory
     os.rmdir(TMPDIR)
