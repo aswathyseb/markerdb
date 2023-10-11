@@ -46,8 +46,7 @@ The command below uses NCBI's nucleotide blast databases (nt) to extract fish sp
 
     markerdb create -m COI -t taxa.txt -b nt -s synonyms.csv
 
-The above command will create a sqlite3 database with all the markers specified in the synonyms file and also extracts `COI` specific sequences \
-in a file named `COI_marker.fa`.
+The above command will create a sqlite3 database with all the markers specified in the synonyms file and also extracts `COI` specific sequences in a file named `COI_marker.fa`.
 
 Once the `sqlite3` database is created use the command below to extract any taxa and marker subsets.
 
@@ -89,8 +88,8 @@ this repository. Users can edit the file to add additional markers.
 
 The main outputs are
 
-1. A FASTA file containing the marker sequences (marker.fa)
-2. SQLite3 database file with sequence details of the marker accessions (marker.db).
+1. A FASTA file containing the marker sequences
+2. SQLite3 database file with all marker sequences specified in the synonyms file (marker.db).
 
 Additional files including sequence details from BLAST databases, species list and taxids, and marker accession list are
 also provided in a separate folder.
